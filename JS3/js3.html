@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Instituto de Computacao - JS3</title>
+  </head>
+  <body>
+    <h1>Um grafico de barras usando imagens</h1>
+    <form class="" name="barras" action="index.html" method="post">
+      Informe a altura das barras (em pixels): <input type="text" name="barra1" value="1"> <input type="text" name="barra2" value="1"> <input type="text" name="barra3" value="1"> <input type="text" name="barra4" value="1"> <input type="text" name="barra5" value="1"> <br>
+      Informe a largura das barras (em pixels): <input type="text" name="largura" value="1"><br><br>
+      <input type="button" name="botao" value="Desenhe o grafico"><br><br>
+      <div>
+        <img src="red.gif" id="red1" width="1" height="1">
+        <img src="red.gif" id="red2" width="1" height="1">
+        <img src="red.gif" id="red3" width="1" height="1">
+        <img src="red.gif" id="red4" width="1" height="1">
+        <img src="red.gif" id="red5" width="1" height="1">
+      </div>
+
+      <script type="text/javascript">
+        document.barras.botao.onclick = function (){
+          largura = document.barras.largura.value;
+
+          document.getElementById('red1').width = largura;
+          document.getElementById('red1').height = document.barras.barra1.value;
+
+          document.getElementById('red2').width = largura;
+          document.getElementById('red2').height = document.barras.barra2.value;
+
+          document.getElementById('red3').width = largura;
+          document.getElementById('red3').height = document.barras.barra3.value;
+
+          document.getElementById('red4').width = largura;
+          document.getElementById('red4').height = document.barras.barra4.value;
+
+          document.getElementById('red5').width = largura;
+          document.getElementById('red5').height = document.barras.barra5.value;
+        }
+      </script>
+    </form>
+
+  </body>
+</html>
