@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Instituto de computacao - JS2</title>
+    <style media="screen">
+      div{
+        float:left;
+        padding-left: 10px;
+      }
+      label{
+        line-height: 26px;
+      }
+    </style>
+  </head>
+  <body>
+    <form class="" name="circulo" action="index.html" method="post">
+      <div class="labels">
+          <label for="raio">Informe o raio</label><br>
+          <label for="area">Area do circulo</label><br>
+          <label for="circ">Circunferencia</label><br>
+      </div>
+      <div class="texts" >
+          <input type="text" name="raio" value="0"><br>
+          <input type="text" name="area" value="0.00"><br>
+          <input type="text" name="circ" value="0.00"><br>
+      </div>
+      <div class="botao">
+        <input type="button" name="botao" value="OK">
+      </div>
+    </form>
+    <script type="text/javascript">
+      document.circulo.botao.onclick = function(){
+        raio = document.circulo.raio.value;
+        document.circulo.area.value = (Math.PI * raio * raio).toFixed(2);
+        document.circulo.circ.value = (2 * Math.PI * raio).toFixed(2);
+      }
+    </script>
+  </body>
+</html>
