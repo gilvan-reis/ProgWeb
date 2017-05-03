@@ -1,0 +1,24 @@
+icomp@icomp-pc ~/Documentos/git/ProgWeb/prova01 $ git log --oneline
+35dc25f questao 4
+37f2985 questao 3
+afc2270 questao 2
+e7ef1d8 questao 1
+7cf38dc exercicio js3
+d7e9dd6 adicionando exercicio JS2
+3f53bb1 corrigindo alinhamento via css
+25d3a07 enviando js1
+6cea105 exercicio css3
+47742b9 Delete css3.html
+b65097a exercicio css3
+7b80f9b exercicio css2
+729f83b exercicio 3, css1
+adff9d7 exe2
+1b58441 Adicionando pasta exe 1
+bf78cf7 Exercicio 1
+
+a) diretório local é a minha área de trabalho local aonde eu altero os arquivos. Esta área fica antes do comando "git add" ser chamado, pois
+  este move os documentos selecionados do diretório local para a stanging area.
+b) repositório local é o repositório salvo na minha maquina local aonde ficam salvos todos os meus commits. A partir do momento que o
+  comando "git push" é chamado, os commits salvos no repositório local são enviados para o repositório remoto que salva este commits para
+  serem acessados de qualquer lugar através de um url. Ao utilizar o comando "git pull" esta operação é invertida, salvando assim os commits
+  do repositório remoto no repositório local.
