@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Isto é um comentário -->
+    <meta charset="utf-8">
+    <meta name="keywords" content="HTML,CSS,JavaScript">
+    <meta name="author" content="John Doe">
+    <title>Instituto de Computação</title>
+  </head>
+  <body>
+    <h1>Instituto de Computação</h1>
+    <p id="para">
+      O Instituto de Computação (IComp), antigo
+      <strong>Departamento de Ciência da Computação (DCC)</strong>, é um
+      instituto acadêmico que agrega os professores da área de
+      computação. Como todo instituto acadêmico o IComp atua no
+      ensino, pesquisa e extensão, além de desempenhar
+      atividades administrativas.
+    </p>
+    <script type="text/javascript">
+      var para = document.getElementById('para');
+      para.onmouseover = function colorir() {
+        para.style.color = "white";
+        para.style.backgroundColor = "black";
+      }
+      para.onmouseout = function descolorir() {
+        para.style.color = "black";
+        para.style.backgroundColor = "white";
+      }
+    </script>
+  </body>
+</html>
