@@ -1,0 +1,7 @@
+O closure é um recurso que permite atribuir uma função para um determinada variável após uma atribuição inicial de certos atributos de
+  interesse. O closure é bem interessante na linguagem JavaScript porque permite criar variáveis "privadas" para um determinada função.
+
+Na questão 4 é atribuída o valor da variável x da função foo. Este valor é alterado internamente e ficará fixo durante qualquer chamada. Na
+  linha seguinte a função que recebeu o closure tem a variável y atribuáda e é impresso o valor de x (3, fixado anteriormente) +
+  y (1, passado como parámetro) + baz (que é incrementado em 1 antes de ser somado. Esta variável baz é uma variável "privada", pois apenas
+  essa função dentro do closure consegue acessa-la).
