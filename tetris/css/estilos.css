@@ -1,0 +1,22 @@
+#tabuleiro div {
+    background-color: blue;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+}
+
+#tabuleiro {
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+  width: 800px;
+  height: 740px;
+}
+
+td{
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+  width: 10px;
+  height: 10px;
+}
