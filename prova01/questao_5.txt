@@ -22,3 +22,7 @@ b) repositório local é o repositório salvo na minha maquina local aonde ficam
   comando "git push" é chamado, os commits salvos no repositório local são enviados para o repositório remoto que salva este commits para
   serem acessados de qualquer lugar através de um url. Ao utilizar o comando "git pull" esta operação é invertida, salvando assim os commits
   do repositório remoto no repositório local.
+
+Nota: 2.0
+Logs e conceitos reportados corretamente.
+

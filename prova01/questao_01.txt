@@ -33,3 +33,7 @@ Solução:
 Erro: Ausencia do fechameto da tag "strong"
 Linha: 17 
 Solução: <strong>Departamento de Ciência da Computação (DCC)</strong>, é um
+
+Nota: 2.0
+Todos os erros foram reportados corretamente.
+
