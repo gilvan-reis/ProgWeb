@@ -5,3 +5,7 @@ Na questão 4 é atribuída o valor da variável x da função foo. Este valor �
   linha seguinte a função que recebeu o closure tem a variável y atribuáda e é impresso o valor de x (3, fixado anteriormente) +
   y (1, passado como parámetro) + baz (que é incrementado em 1 antes de ser somado. Esta variável baz é uma variável "privada", pois apenas
   essa função dentro do closure consegue acessa-la).
+
+Nota: 2.0
+Descrição de closure e de funcionamento do código corretos.
+
