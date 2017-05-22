@@ -1,12 +1,14 @@
 (function(){
 	var qtdLinhas = 46;
 	var qtdColunas = 80;
-	var FPS = 10;
+	var FPS = 3;
+	//var FPS = 10;
 	var pontuacao = 0;
 	var gameOver = false;
 	var tabuleiro;
 	var peca = null;
 	var proximaPeca = null;
+	var gameLoop;
 
 	var tabela;
 	var divTabuleiro;
@@ -34,6 +36,7 @@
     }
 
     criaPeca();
+		gameLoop = setInterval(loop, 1000/FPS);
 	}
 
 	function reinicia(){
@@ -44,10 +47,10 @@
 
 		//repintar tabela
 		for (var i = 0; i < qtdLinhas; i++){
-        for (var j = 0; j < qtdColunas; j++){
-            tabuleiro[i][j].style.backgroundColor = white;
-        }
-    }
+	        for (var j = 0; j < qtdColunas; j++){
+	            tabuleiro[i][j].style.backgroundColor = white;
+	        }
+	    }
 	}
 
 	function criaPeca(){
@@ -55,19 +58,20 @@
 			//primeira chamada
 			peca = novaPeca();
 			proximaPeca = novaPeca();
-
-			imprimePeca(peca);
 		}else{
 			peca = proximaPeca;
 			proximaPeca = novaPeca();
 		}
+
+		imprimePeca(peca);
+		//clearInterval(gameLoop); //para totalmente o loop
 	}
 
 	function novaPeca(){
 		//utilizar closure para criar as pecas?
 		var metade = Math.floor(qtdColunas/2);
-		//switch(Math.floor(Math.random() * 5)){
-		switch(4){
+		switch(Math.floor(Math.random() * 5)){
+		//switch(0){
 			case 0:
 				//quadrado
 				//colocar rotacao, imprime peca e etc dentro do objeto peca?
@@ -721,25 +725,585 @@
 			tabuleiro[coordLNew][coordCNew].style.backgroundColor = 'black';
 	}
 
+	function verificaBaixoPeca(){
+		if(peca.coordL[3] == qtdLinhas - 1){
+			console.log("peca chegou ao final do tabuleiro. Criando nova");
+			criaPeca();
+			return true;
+		}else{
+			switch(peca.tipo){
+				case 0:
+					if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+						console.log("bateu");
+						criaPeca();
+						return true;
+					} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+						console.log("bateu");
+						criaPeca();
+						return true;
+					}
+					break;
+				case 1:
+					if(peca.rotacao == 0){
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else {
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					}
+					break;
+				case 2:
+					if(peca.rotacao == 0){
+						if(tabuleiro[peca.coordL[0]+1][peca.coordC[0]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else {
+						if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					}
+					break;
+				case 3:
+					if(peca.rotacao == 0){
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else if(peca.rotacao == 1){
+						if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else if(peca.rotacao == 2){
+						if(tabuleiro[peca.coordL[0]+1][peca.coordC[0]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else {
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					}
+					break;
+				case 4:
+					if(peca.rotacao == 0){
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else if(peca.rotacao == 1){
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else if(peca.rotacao == 2){
+						if(tabuleiro[peca.coordL[0]+1][peca.coordC[0]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else {
+						if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					}
+					break;
+
+			}
+		}
+	}
+
+	function verificaEsquerdaPeca(){
+		if(peca.coordL[3] == qtdLinhas - 1){
+			console.log("peca chegou ao final do tabuleiro. Criando nova");
+			criaPeca();
+			return true;
+		}else{
+			switch(peca.tipo){
+				case 0:
+					if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+						console.log("bateu");
+						criaPeca();
+						return true;
+					} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+						console.log("bateu");
+						criaPeca();
+						return true;
+					}
+					break;
+				case 1:
+					if(peca.rotacao == 0){
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else {
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					}
+					break;
+				case 2:
+					if(peca.rotacao == 0){
+						if(tabuleiro[peca.coordL[0]+1][peca.coordC[0]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else {
+						if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					}
+					break;
+				case 3:
+					if(peca.rotacao == 0){
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else if(peca.rotacao == 1){
+						if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else if(peca.rotacao == 2){
+						if(tabuleiro[peca.coordL[0]+1][peca.coordC[0]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else {
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					}
+					break;
+				case 4:
+					if(peca.rotacao == 0){
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else if(peca.rotacao == 1){
+						if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else if(peca.rotacao == 2){
+						if(tabuleiro[peca.coordL[0]+1][peca.coordC[0]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[1]+1][peca.coordC[1]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					} else {
+						if(tabuleiro[peca.coordL[2]+1][peca.coordC[2]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						} else if(tabuleiro[peca.coordL[3]+1][peca.coordC[3]].style.backgroundColor == "black"){
+							console.log("bateu");
+							criaPeca();
+							return true;
+						}
+					}
+					break;
+
+			}
+		}
+	}
+
+	function verificaDireitaPeca(){
+		switch(peca.tipo){
+			case 0:
+				if(peca.coordC[3] == qtdColunas - 1){
+					console.log("bateu direita");
+					return true;
+				}else if(tabuleiro[peca.coordL[1]][peca.coordC[1]+1].style.backgroundColor == "black"){
+					console.log("bateu direita");
+					return true;
+				} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+					console.log("bateu direita");
+					return true;
+				}
+				break;
+			case 1:
+				if(peca.rotacao == 0){
+					if(peca.coordC[1] == qtdColunas - 1){
+						console.log("bateu direita");
+						return true;
+					}else if(tabuleiro[peca.coordL[1]][peca.coordC[1]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					}
+				} else {
+					if(peca.coordC[3] == qtdColunas - 1){
+						console.log("bateu direita");
+						return true;
+					}else if(tabuleiro[peca.coordL[0]][peca.coordC[0]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[2]][peca.coordC[2]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					}
+				}
+				break;
+			case 2:
+				if(peca.coordC[3] == qtdColunas - 1){
+					console.log("bateu direita");
+					return true;
+				}else{
+					if(peca.rotacao == 0){
+						if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+							console.log("bateu direita");
+							return true;
+						}
+					} else {
+						if(tabuleiro[peca.coordL[0]][peca.coordC[0]+1].style.backgroundColor == "black"){
+							console.log("bateu direita");
+							return true;
+						} else if(tabuleiro[peca.coordL[1]][peca.coordC[1]+1].style.backgroundColor == "black"){
+							console.log("bateu direita");
+							return true;
+						} else if(tabuleiro[peca.coordL[2]][peca.coordC[2]+1].style.backgroundColor == "black"){
+							console.log("bateu direita");
+							return true;
+						} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+							console.log("bateu direita");
+							return true;
+						}
+					}
+				}
+				break;
+			case 3:
+				if(peca.rotacao == 0){
+					if(peca.coordC[3] == qtdColunas - 1){
+						console.log("bateu direita");
+						return true;
+					}else if(tabuleiro[peca.coordL[0]][peca.coordC[0]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					}
+				} else if(peca.rotacao == 1){
+					if(peca.coordC[2] == qtdColunas - 1){
+						console.log("bateu direita");
+						return true;
+					}else if(tabuleiro[peca.coordL[0]][peca.coordC[0]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[2]][peca.coordC[2]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					}
+				} else if(peca.rotacao == 2){
+					if(peca.coordC[2] == qtdColunas - 1){
+						console.log("bateu direita");
+						return true;
+					}else if(tabuleiro[peca.coordL[2]][peca.coordC[2]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					}
+				} else {
+					if(peca.coordC[3] == qtdColunas - 1){
+						console.log("bateu direita");
+						return true;
+					}else if(tabuleiro[peca.coordL[0]][peca.coordC[0]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[2]][peca.coordC[2]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					}
+				}
+				break;
+			case 4:
+				if(peca.rotacao == 0){
+					if(peca.coordC[3] == qtdColunas - 1){
+						console.log("bateu direita");
+						return true;
+					}else if(tabuleiro[peca.coordL[0]][peca.coordC[0]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					}
+				} else if(peca.rotacao == 1){
+					if(peca.coordC[1] == qtdColunas - 1){
+						console.log("bateu direita");
+						return true;
+					}else if(tabuleiro[peca.coordL[1]][peca.coordC[1]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[2]][peca.coordC[2]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					}
+				} else if(peca.rotacao == 2){
+					if(peca.coordC[3] == qtdColunas - 1){
+						console.log("bateu direita");
+						return true;
+					}else if(tabuleiro[peca.coordL[2]][peca.coordC[2]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					}
+				} else {
+					if(peca.coordC[3] == qtdColunas - 1){
+						console.log("bateu direita");
+						return true;
+					}else if(tabuleiro[peca.coordL[0]][peca.coordC[0]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[1]][peca.coordC[1]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					} else if(tabuleiro[peca.coordL[3]][peca.coordC[3]+1].style.backgroundColor == "black"){
+						console.log("bateu direita");
+						return true;
+					}
+				}
+				break;
+		}
+
+	}
+
+
 	//----
 	addEventListener("keydown", function(e) {
 			if (e.key == "ArrowLeft") {
 				//peca.style.left = (parseInt(peca.style.left) - 10) + "px";
-				peca.mover(2);
+				if(!verificaEsquerdaPeca()){
+					peca.mover(2);
+				}
+
 			} else if (e.key == "ArrowRight") {
 				//peca.style.left = (parseInt(peca.style.left) + 10) + "px";
-				peca.mover(1);
+				console.log(peca.coordC[3]);
+				if(!verificaEsquerdaPeca()){
+					peca.mover(1);
+				}
 			} else if (e.key == "ArrowUp") {
 				//peca.style.left = (parseInt(peca.style.left) + 10) + "px";
 				//moverPeca([peca.coordL[0]-1, peca.coordL[1]-1, peca.coordL[2]-1, peca.coordL[3]-1], peca.coordC);
 				peca.rotacionar();
 			} else if (e.key == "ArrowDown") {
 				//moverPeca([peca.coordL[0]+1, peca.coordL[1]+1, peca.coordL[2]+1, peca.coordL[3]+1], peca.coordC);
-				peca.mover(0);
+				//peca.mover(0);
+				criaPeca();
 
 					//peca.style.left = (parseInt(peca.style.left) + 10) + "px";
 			}
 	});
+
+	function loop(){
+		if(!gameOver){
+			if(verificaBaixoPeca()){
+				//verifica se alguma linha deve ser excluida
+			}
+			//verifica se game over
+
+			peca.mover(0);
+			//console.log(peca.coordL[3]);
+
+
+		}
+
+	}
 
 	//----
 	inicia();
