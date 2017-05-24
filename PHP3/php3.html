@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Instituto de Computação</title>
+  </head>
+  <body>
+      <script type="text/javascript">
+          var usuario=prompt("Digite o usuario","")
+          var senha=prompt("Digite a senha","")
+
+          if(usuario=="demo"){
+              if(senha=="demo"){
+                  document.write('\
+                      <h1>Formulário de Contato</h1> \
+                      <p>Por favor, preencha o formulário abaixo e clique no botão Enviar Mensagem. Agradecemos pelo seu contato.</p>\
+                      <form id="contato" method="get" action="dados.php">\
+                      <fieldset>\
+                        <legend>Dados Básicos</legend>\
+                        <label for="nome">Nome </label><input type="text" name="nome" value="" id="nome"><br>\
+                        <label for="email">E-mail </label><input type="email" name="email" value="" id="email"><br>\
+                        <label for="site">Website </label><input type="url" name="site" value="http://" id="site"><br>\
+                      </fieldset>\
+                      <fieldset>\
+                        <legend>Digite sua Mensagem</legend>\
+                        <textarea name="mensagem" rows="4" cols="50"></textarea>\
+                      </fieldset>\
+                      <input type="reset" value="Resetar dados">\
+                      <input type="submit" name="submit" value="Enviar Mensagem">\
+                    </form>\
+                ')
+            }else{
+                document.write('\
+                    <h1>ERRO 403</h1> \
+                    <p>Usuario ou senha incorretos. Favor tentar novamente</p>\
+                ')
+            }
+          }else{
+              document.write('\
+                  <h1>ERRO 403</h1> \
+                  <p>Usuario ou senha incorretos. Favor tentar novamente</p>\
+              ')
+          }
+      </script>
+
+
+  </body>
+</html>
