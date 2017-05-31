@@ -1241,6 +1241,44 @@
 		return tabuleiro[coordL][coordC].style.backgroundColor == "black";
 	}
 
+	function linhaCompleta(linha){
+		for (var j = 0; j < qtdColunas; j++){
+			if(tabuleiro[linha][j].style.backgroundColor == "white"){
+				return false;
+			}
+        }
+
+		return true;
+	}
+
+	function moverLinha(linhaOrigem, linhaDestino){
+		//nao vai precisar alterar as coordenadas da peca pq uma linha so podera ser movida quando a peca ficar presa
+		for (var j = 0; j < qtdColunas; j++){
+			tabuleiro[linhaDestino][j].style.backgroundColor = tabuleiro[linhaOrigem][j].style.backgroundColor;
+        }
+	}
+
+	function apagaLinha(linhaOrigem){
+		//nao vai precisar alterar as coordenadas da peca pq uma linha so podera ser movida quando a peca ficar presa
+		for (var j = 0; j < qtdColunas; j++){
+			tabuleiro[linhaDestino][j].style.backgroundColor = "white";
+        }
+	}
+
+	function verificaSeLinhaExcluida(){
+		var apontaLinha = -1;
+		for(var linha=peca.coordL[3]; linha<=peca.coordL[0]; i--){
+			if(linhaCompleta(linha)){
+				if(apontaLinha == -1){
+					apontaLinha = linha;
+				}
+			}else{
+				moverLinha(linha,apontaLinha);
+				apontaLinha = -1;
+			}
+		}
+	}
+
 
 	//----
 	addEventListener("keydown", function(e) {
@@ -1273,6 +1311,7 @@
 		if(!gameOver){
 			if(verificaBaixoPeca()){
 				//verifica se alguma linha deve ser excluida
+
 				criaPeca();
 			}
 			//verifica se game over
