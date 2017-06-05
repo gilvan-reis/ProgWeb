@@ -1,8 +1,8 @@
 (function(){
 	var qtdLinhas = 46;
 	var qtdColunas = 40;
-	var FPS = 3;
-	//var FPS = 10;
+	//var FPS = 3;
+	var FPS = 100;
 	var pontuacao = 0;
 	var gameOver = false;
 	var tabuleiro;
@@ -25,17 +25,18 @@
 
 		tabuleiro = new Array(qtdLinhas);
 
-    for (var i = 0; i < qtdLinhas; i++){
-        tabuleiro[i] = document.createElement("tr");
-        tabela.appendChild(tabuleiro[i]);
+	    for (var i = 0; i < qtdLinhas; i++){
+	        tabuleiro[i] = document.createElement("tr");
+	        tabela.appendChild(tabuleiro[i]);
 
-        for (var j = 0; j < qtdColunas; j++){
-            tabuleiro[i][j] = document.createElement("td");
-            tabuleiro[i].appendChild(tabuleiro[i][j]);
-        }
-    }
+	        for (var j = 0; j < qtdColunas; j++){
+	            tabuleiro[i][j] = document.createElement("td");
+	            tabuleiro[i].appendChild(tabuleiro[i][j]);
+				tabuleiro[i][j].style.backgroundColor = "white";
+	        }
+	    }
 
-    criaPeca();
+	    criaPeca();
 		gameLoop = setInterval(loop, 1000/FPS);
 	}
 
@@ -48,9 +49,12 @@
 		//repintar tabela
 		for (var i = 0; i < qtdLinhas; i++){
 	        for (var j = 0; j < qtdColunas; j++){
-	            tabuleiro[i][j].style.backgroundColor = white;
+	            tabuleiro[i][j].style.backgroundColor = "white";
 	        }
 	    }
+
+		criaPeca();
+		console.clear();
 	}
 
 	function criaPeca(){
@@ -63,7 +67,14 @@
 			proximaPeca = novaPeca();
 		}
 
-		imprimePeca(peca);
+		//imprimePeca(peca);
+		if(verificaBaixoPeca()){
+			//gameOver
+			gameOver = true;
+			console.log(">>Game Over");
+		}else{
+			peca.mover(0);
+		}
 		//clearInterval(gameLoop); //para totalmente o loop
 	}
 
@@ -71,16 +82,17 @@
 		//utilizar closure para criar as pecas?
 		var metade = Math.floor(qtdColunas/2);
 		switch(Math.floor(Math.random() * 5)){
-		//switch(0){
+		//switch(4){
 			case 0:
 				//quadrado
 				//colocar rotacao, imprime peca e etc dentro do objeto peca?
 				return {
 						tipo:0,
 						rotacao:0,
-						//coordL:[-1,-1,0,0],
-						coordL:[4,4,5,5],
+						coordL:[-2,-2,-1,-1],
+						//coordL:[4,4,5,5],
 						coordC:[metade-1,metade,metade-1,metade],
+						cor:"red",
 						mover: function(dir){
 							switch (dir) {
 								case 0:
@@ -126,9 +138,10 @@
 				return {
 						tipo:1,
 						rotacao:0,
-						//coordL:[-1,-1,0,0],
-						coordL:[4,4,5,5],
+						coordL:[-2,-2,-1,-1],
+						//coordL:[4,4,5,5],
 						coordC:[metade,metade+1,metade-1,metade],
+						cor:"blue",
 						mover: function(dir){
 							switch (dir) {
 								case 0:
@@ -192,11 +205,10 @@
 						rotacionar:function(){
 							switch(this.rotacao){
 								case 0:
-									//if(!(tabuleiroPintado())){ //verifica se nao vai haver colisao ao rotacionar
-									if(true){
+									var l = this.coordL[0];
+									var c = this.coordC[0];
+									if(!( tabuleiroPintado(l-1, c-1) || tabuleiroPintado(l, c-1) )){
 										this.rotacao=1;
-										var l = this.coordL[0];
-										var c = this.coordC[0];
 										repintaPeca(this.coordL[2], this.coordC[2], l-1, c-1, true);
 										this.coordL[0] = l-1;
 										this.coordC[0] = c-1;
@@ -209,10 +221,10 @@
 									}
 									break;
 								default:
-									if(true){ //verifica se nao vai haver colisao ao rotacionar
+									var l = this.coordL[2];
+									var c = this.coordC[2];
+									if(!( tabuleiroPintado(l+1, c-1) || tabuleiroPintado(l, c+1) )){ //verifica se nao vai haver colisao ao rotacionar
 										this.rotacao=0;
-										var l = this.coordL[2];
-										var c = this.coordC[2];
 										repintaPeca(this.coordL[0], this.coordC[0], l+1, c-1, true);
 										this.coordL[0] = l;
 										this.coordC[0] = c;
@@ -233,9 +245,10 @@
 				return {
 						tipo:2,
 						rotacao:0,
-						//coordL:[0,0,0,0],
-						coordL:[5,5,5,5],
+						coordL:[-1,-1,-1,-1],
+						//coordL:[5,5,5,5],
 						coordC:[metade-2,metade-1,metade,metade+1],
+						cor:"green",
 						mover: function(dir){
 							switch (dir) {
 								case 0:
@@ -303,10 +316,10 @@
 						rotacionar:function(){
 							switch(this.rotacao){
 								case 0:
-									if(true){ //verifica se nao vai haver colisao ao rotacionar
+									var l = this.coordL[2];
+									var c = this.coordC[2];
+									if(!( tabuleiroPintado(l-2, c) || tabuleiroPintado(l-1, c) || tabuleiroPintado(l+1, c) )){ //verifica se nao vai haver colisao ao rotacionar
 										this.rotacao=1;
-										var l = this.coordL[2];
-										var c = this.coordC[2];
 										repintaPeca(this.coordL[0], this.coordC[0], l-2, c, true);
 										this.coordL[0] = l-2;
 										this.coordC[0] = c;
@@ -320,10 +333,10 @@
 									}
 									break;
 								default:
-									if(true){ //verifica se nao vai haver colisao ao rotacionar
+									var l = this.coordL[2];
+									var c = this.coordC[2];
+									if(!( tabuleiroPintado(l, c-2) || tabuleiroPintado(l, c-1) || tabuleiroPintado(l, c+1) )){ //verifica se nao vai haver colisao ao rotacionar
 										this.rotacao=0;
-										var l = this.coordL[2];
-										var c = this.coordC[2];
 										repintaPeca(this.coordL[0], this.coordC[0], l, c-2, true);
 										this.coordL[0] = l;
 										this.coordC[0] = c-2;
@@ -345,9 +358,10 @@
 				return {
 						tipo:3,
 						rotacao:0,
-						//coordL:[-1,0,0,0],
-						coordL:[4,5,5,5],
+						coordL:[-2,-1,-1,-1],
+						//coordL:[4,5,5,5],
 						coordC:[metade,metade-1,metade,metade+1],
+						cor:"purple",
 						mover: function(dir){
 							switch (dir) {
 								case 0:
@@ -457,10 +471,10 @@
 						rotacionar:function(){
 							switch(this.rotacao){
 								case 0:
-									if(true){ //verifica se nao vai haver colisao ao rotacionar
+									var l = this.coordL[2];
+									var c = this.coordC[2];
+									if(!( tabuleiroPintado(l+1, c) )){ //verifica se nao vai haver colisao ao rotacionar
 										this.rotacao=1;
-										var l = this.coordL[2];
-										var c = this.coordC[2];
 										//a peca 1 nao muda
 										repintaPeca(this.coordL[1], this.coordC[1], l+1, c, true);
 										this.coordL[1] = l;
@@ -472,10 +486,10 @@
 									}
 									break;
 								case 1:
-									if(true){ //verifica se nao vai haver colisao ao rotacionar
+									var l = this.coordL[1];
+									var c = this.coordC[1];
+									if(!( tabuleiroPintado(l, c-1) )){ //verifica se nao vai haver colisao ao rotacionar
 										this.rotacao=2;
-										var l = this.coordL[1];
-										var c = this.coordC[1];
 										repintaPeca(this.coordL[0], this.coordC[0], l, c-1, true);
 										this.coordL[0] = l;
 										this.coordC[0] = c-1;
@@ -485,11 +499,10 @@
 									}
 									break;
 								case 2:
-									if(true){ //verifica se nao vai haver colisao ao rotacionar
+									var l = this.coordL[1];
+									var c = this.coordC[1];
+									if(!( tabuleiroPintado(l-1, c) )){ //verifica se nao vai haver colisao ao rotacionar
 										this.rotacao=3;
-										var l = this.coordL[1];
-										var c = this.coordC[1];
-
 										repintaPeca(this.coordL[2], this.coordC[2], l-1, c, true);
 										this.coordL[0] = l-1;
 										this.coordC[0] = c;
@@ -502,10 +515,10 @@
 									}
 									break;
 								default:
-									if(true){ //verifica se nao vai haver colisao ao rotacionar
+									var l = this.coordL[2];
+									var c = this.coordC[2];
+									if(!( tabuleiroPintado(l, c+1) )){ //verifica se nao vai haver colisao ao rotacionar
 										this.rotacao=0;
-										var l = this.coordL[2];
-										var c = this.coordC[2];
 										repintaPeca(this.coordL[3], this.coordC[3], l, c+1, true);
 										//a peca 1 nao muda
 										//a peca 2 nao muda
@@ -523,9 +536,10 @@
 				return {
 						tipo:4,
 						rotacao:0,
-						//coordL:[-1,0,0,0],
-						coordL:[4,5,5,5],
+						coordL:[-2,-1,-1,-1],
+						//coordL:[4,5,5,5],
 						coordC:[metade-1,metade-1,metade,metade+1],
+						cor:"black",
 						mover: function(dir){
 							switch (dir) {
 								case 0:
@@ -635,10 +649,10 @@
 						rotacionar:function(){
 							switch(this.rotacao){
 								case 0:
-									if(true){ //verifica se nao vai haver colisao ao rotacionar
+									var l = this.coordL[2];
+									var c = this.coordC[2];
+									if(!( tabuleiroPintado(l-1, c) || tabuleiroPintado(l-1, c+1) || tabuleiroPintado(l+1, c) )){ //verifica se nao vai haver colisao ao rotacionar
 										this.rotacao=1;
-										var l = this.coordL[2];
-										var c = this.coordC[2];
 										repintaPeca(this.coordL[0], this.coordC[0], l-1, c, true);
 										repintaPeca(this.coordL[1], this.coordC[1], l-1, c+1, true);
 										repintaPeca(this.coordL[3], this.coordC[3], l+1, c, true);
@@ -652,10 +666,10 @@
 									}
 									break;
 								case 1:
-									if(true){ //verifica se nao vai haver colisao ao rotacionar
+									var l = this.coordL[2];
+									var c = this.coordC[2];
+									if(!( tabuleiroPintado(l, c-1) || tabuleiroPintado(l, c+1) || tabuleiroPintado(l+1, c+1) )){ //verifica se nao vai haver colisao ao rotacionar
 										this.rotacao=2;
-										var l = this.coordL[2];
-										var c = this.coordC[2];
 										repintaPeca(this.coordL[0], this.coordC[0], l, c-1, true);
 										repintaPeca(this.coordL[1], this.coordC[1], l, c+1, true);
 										repintaPeca(this.coordL[3], this.coordC[3], l+1, c+1, true);
@@ -670,10 +684,10 @@
 									}
 									break;
 								case 2:
-									if(true){ //verifica se nao vai haver colisao ao rotacionar
+									var l = this.coordL[1];
+									var c = this.coordC[1];
+									if(!( tabuleiroPintado(l-1, c) || tabuleiroPintado(l+1, c-1) || tabuleiroPintado(l+1, c) )){ //verifica se nao vai haver colisao ao rotacionar
 										this.rotacao=3;
-										var l = this.coordL[1];
-										var c = this.coordC[1];
 										repintaPeca(this.coordL[0], this.coordC[0], l-1, c, true);
 										repintaPeca(this.coordL[2], this.coordC[2], l+1, c-1, true);
 										repintaPeca(this.coordL[3], this.coordC[3], l+1, c, true);
@@ -687,10 +701,10 @@
 									}
 									break;
 								default:
-									if(true){ //verifica se nao vai haver colisao ao rotacionar
+									var l = this.coordL[1];
+									var c = this.coordC[1];
+									if(!( tabuleiroPintado(l-1, c-1) || tabuleiroPintado(l, c-1) || tabuleiroPintado(l, c+1) )){ //verifica se nao vai haver colisao ao rotacionar
 										this.rotacao=0;
-										var l = this.coordL[1];
-										var c = this.coordC[1];
 										repintaPeca(this.coordL[0], this.coordC[0], l-1, c-1, true);
 										repintaPeca(this.coordL[2], this.coordC[2], l, c-1, true);
 										repintaPeca(this.coordL[3], this.coordC[3], l, c+1, true);
@@ -714,7 +728,7 @@
 	function imprimePeca(peca){
 		for (var i = 0; i < 4; i++) {
 			if(peca.coordL[i] >= 0){
-				tabuleiro[peca.coordL[i]][peca.coordC[i]].style.backgroundColor = 'black';
+				tabuleiro[peca.coordL[i]][peca.coordC[i]].style.backgroundColor = peca.cor;
 			}
 		}
 	}
@@ -723,7 +737,9 @@
 			if((coordLOld >= 0) && (apagarAntigo)){
 				tabuleiro[coordLOld][coordCOld].style.backgroundColor = 'white';
 			}
-			tabuleiro[coordLNew][coordCNew].style.backgroundColor = 'black';
+			if(coordLNew >= 0){
+				tabuleiro[coordLNew][coordCNew].style.backgroundColor = peca.cor;
+			}
 	}
 
 	function verificaBaixoPeca(){
@@ -1230,20 +1246,23 @@
 	}
 
 	function tabuleiroPintado(coordL, coordC){
-		if(coordC == qtdColunas){
+		if(coordC >= qtdColunas){
 			return true;
-		}else if(coordC == -1){
+		}else if(coordC <= -1){
 			return true;
-		}else if(coordL == qtdLinhas){
+		}else if(coordL >= qtdLinhas){
+			return true;
+		}else if(coordL < 0){
 			return true;
 		}
 
-		return tabuleiro[coordL][coordC].style.backgroundColor == "black";
+		return tabuleiro[coordL][coordC].style.backgroundColor != "white";
 	}
 
 	function linhaCompleta(linha){
 		for (var j = 0; j < qtdColunas; j++){
 			if(tabuleiro[linha][j].style.backgroundColor == "white"){
+				console.log("linha: " + linha + ",coluna: " + j);
 				return false;
 			}
         }
@@ -1255,33 +1274,42 @@
 		//nao vai precisar alterar as coordenadas da peca pq uma linha so podera ser movida quando a peca ficar presa
 		for (var j = 0; j < qtdColunas; j++){
 			tabuleiro[linhaDestino][j].style.backgroundColor = tabuleiro[linhaOrigem][j].style.backgroundColor;
-        }
-	}
-
-	function apagaLinha(linhaOrigem){
-		//nao vai precisar alterar as coordenadas da peca pq uma linha so podera ser movida quando a peca ficar presa
-		for (var j = 0; j < qtdColunas; j++){
-			tabuleiro[linhaDestino][j].style.backgroundColor = "white";
+			tabuleiro[linhaOrigem][j].style.backgroundColor = "white";
         }
 	}
 
 	function verificaSeLinhaExcluida(){
-		var apontaLinha = -1;
-		for(var linha=peca.coordL[3]; linha<=peca.coordL[0]; i--){
-			if(linhaCompleta(linha)){
-				if(apontaLinha == -1){
-					apontaLinha = linha;
-				}
-			}else{
-				moverLinha(linha,apontaLinha);
-				apontaLinha = -1;
+		var apontaLinha = peca.coordL[3];
+		for(var linha=peca.coordL[3]; linha>=peca.coordL[0]; linha--){
+			if(linha < 0){
+				break;
 			}
+			if(!linhaCompleta(linha)){
+				if(apontaLinha != linha){
+					moverLinha(linha,apontaLinha);
+				}
+				apontaLinha = apontaLinha - 1;
+			}else{
+				console.log("linha completa: " + linha);
+			}
+		}
+		var linha = peca.coordL[0] - 1;
+		if(apontaLinha != linha){
+			while (linha >= 0) {
+				moverLinha(linha,apontaLinha);
+				apontaLinha = apontaLinha - 1;
+				linha = linha - 1;
+			}
+			return true;
+		}else{
+			return false;
 		}
 	}
 
 
 	//----
 	addEventListener("keydown", function(e) {
+		if(gameOver == false){
 			if (e.key == "ArrowLeft") {
 				//peca.style.left = (parseInt(peca.style.left) - 10) + "px";
 				if(!verificaEsquerdaPeca()){
@@ -1305,13 +1333,18 @@
 
 					//peca.style.left = (parseInt(peca.style.left) + 10) + "px";
 			}
+		}
+
+		if (e.key == " ") {
+			reinicia();
+		}
 	});
 
 	function loop(){
-		if(!gameOver){
+		if(gameOver == false){
 			if(verificaBaixoPeca()){
 				//verifica se alguma linha deve ser excluida
-
+				verificaSeLinhaExcluida();
 				criaPeca();
 			}
 			//verifica se game over
