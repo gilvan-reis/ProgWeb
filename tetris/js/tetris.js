@@ -159,6 +159,7 @@
 										repintaPeca(this.coordL[1], this.coordC[1], this.coordL[1]+1, this.coordC[1], false);
 										this.coordL[1] += 1;
 									}
+									console.log("descer:"+peca.coordL[0] + "," + peca.coordL[1] + "," + peca.coordL[2] + "," + peca.coordL[3]);
 									break;
 								case 1:
 									//direita
@@ -758,8 +759,9 @@
 					}
 					break;
 				case 1:
+					console.log(peca.coordL[0] + "," + peca.coordL[1] + "," + peca.coordL[2] + "," + peca.coordL[3]);
 					if(peca.rotacao == 0){
-						if(tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])){
+						if((peca.coordL[1] >=-1) && (tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])) ){
 							console.log("bateu");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[2]+1, peca.coordC[2])){
