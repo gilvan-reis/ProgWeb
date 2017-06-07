@@ -14,12 +14,22 @@
 	var divTabuleiro;
 	var divProximaPeca;
 	var divInformacoes;
+	var placar;
+	var tabelaProximaPeca;
 
 	//----
 	function inicia(){
 		divTabuleiro = document.querySelector("#tabuleiro");
 		divProximaPeca = document.querySelector("#proximaPeca");
-		divInformacoes = document.querySelector("#infomacoes");
+		divInformacoes = document.querySelector("#informacoes");
+
+		preencheInterfaceGrafica();
+
+	    criaPeca();
+		gameLoop = setInterval(loop, 1000/FPS);
+	}
+
+	function preencheInterfaceGrafica(){
 		tabela = document.createElement("table");
 		divTabuleiro.appendChild(tabela);
 
@@ -36,8 +46,37 @@
 	        }
 	    }
 
-	    criaPeca();
-		gameLoop = setInterval(loop, 1000/FPS);
+		//---
+		divProximaPeca.innerHTML = "<label><b><u>Proxima peça</u></b></label><br><br>";
+		var tabelaProx = document.createElement("table");
+		tabelaProx.align = "center";
+		divProximaPeca.appendChild(tabelaProx);
+		divProximaPeca.appendChild(document.createElement("br"));
+
+		tabelaProximaPeca = new Array(4);
+
+	    for (var i = 0; i < 4; i++){
+	        tabelaProximaPeca[i] = document.createElement("tr");
+	        tabelaProx.appendChild(tabelaProximaPeca[i]);
+
+	        for (var j = 0; j < 4; j++){
+	            tabelaProximaPeca[i][j] = document.createElement("td");
+	            tabelaProximaPeca[i].appendChild(tabelaProximaPeca[i][j]);
+				tabelaProximaPeca[i][j].style.backgroundColor = "white";
+	        }
+	    }
+
+		//---
+		divInformacoes.innerHTML = "<label><b><u>Informações</u></b></label><br><br>\
+										<b>Pontuação</b><br>\
+										<label id=placar>0</label><br><br>\
+										<b>Comandos</b><br>\
+										<label>&#x2190: move a peça para a esquerda</label><br>\
+										<label>&#x2192: move a peça para a direita</label><br>\
+										<label>&#x2191: rotaciona a peça</label><br>\
+										<label>&#x2193: faz a peça descer</label><br>\
+										<label>ESPACO: inicia um novo jogo</label><br>";
+		placar = document.querySelector("#placar");
 	}
 
 	function reinicia(){
@@ -57,6 +96,19 @@
 		console.clear();
 	}
 
+	function imprimeProximaPeca(){
+		for (var i = 0; i < 4; i++){
+	        for (var j = 0; j < 4; j++){
+	            tabelaProximaPeca[i][j].style.backgroundColor = "white";
+	        }
+	    }
+
+		var metade = Math.floor(qtdColunas/2);
+		for (var i = 0; i < 4; i++) {
+			tabelaProximaPeca[proximaPeca.coordL[i]+3][proximaPeca.coordC[i]-metade+2].style.backgroundColor = proximaPeca.cor;
+		}
+	}
+
 	function criaPeca(){
 		if(peca == null){ //testar
 			//primeira chamada
@@ -65,7 +117,10 @@
 		}else{
 			peca = proximaPeca;
 			proximaPeca = novaPeca();
+			incrementaPontuacao(10);
 		}
+
+		imprimeProximaPeca();
 
 		//imprimePeca(peca);
 		if(verificaBaixoPeca()){
@@ -784,21 +839,21 @@
 				case 2:
 					if(peca.rotacao == 0){
 						if(tabuleiroPintado(peca.coordL[0]+1, peca.coordC[0])){
-							console.log("bateu");
+							console.log("bateu 2.1");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])){
-							console.log("bateu");
+							console.log("bateu 2.2");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[2]+1, peca.coordC[2])){
-							console.log("bateu");
+							console.log("bateu 2.3");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 2.4");
 							return true;
 						}
 					} else {
 						if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 2");
 							return true;
 						}
 					}
@@ -847,13 +902,13 @@
 				case 4:
 					if(peca.rotacao == 0){
 						if(tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])){
-							console.log("bateu");
+							console.log("bateu 4,1");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[2]+1, peca.coordC[2])){
-							console.log("bateu");
+							console.log("bateu 4,2");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 4,3");
 							return true;
 						}
 					} else if(peca.rotacao == 1){
@@ -1247,6 +1302,15 @@
 		}
 	}
 
+	function incrementaPontuacao(valor){
+		pontuacao = pontuacao + valor;
+		if(pontuacao % 100 == 0){
+			//aumenta a velocidade
+		}
+
+		placar.innerHTML = pontuacao;
+	}
+
 	function tabuleiroPintado(coordL, coordC){
 		if(coordC >= qtdColunas){
 			return true;
@@ -1292,6 +1356,7 @@
 				}
 				apontaLinha = apontaLinha - 1;
 			}else{
+				incrementaPontuacao(100);
 				console.log("linha completa: " + linha);
 			}
 		}
