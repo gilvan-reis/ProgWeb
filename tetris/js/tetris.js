@@ -2,7 +2,7 @@
 	var qtdLinhas = 46;
 	var qtdColunas = 40;
 	//var FPS = 3;
-	var FPS = 100;
+	var FPS = 5;
 	var pontuacao = 0;
 	var gameOver = false;
 	var tabuleiro;
@@ -127,8 +127,9 @@
 			//gameOver
 			gameOver = true;
 			console.log(">>Game Over");
+			alert("Fim de Jogo");
 		}else{
-			peca.mover(0);
+			//peca.mover(0);
 		}
 		//clearInterval(gameLoop); //para totalmente o loop
 	}
@@ -214,7 +215,7 @@
 										repintaPeca(this.coordL[1], this.coordC[1], this.coordL[1]+1, this.coordC[1], false);
 										this.coordL[1] += 1;
 									}
-									console.log("descer:"+peca.coordL[0] + "," + peca.coordL[1] + "," + peca.coordL[2] + "," + peca.coordL[3]);
+									//console.log("descer:"+peca.coordL[0] + "," + peca.coordL[1] + "," + peca.coordL[2] + "," + peca.coordL[3]);
 									break;
 								case 1:
 									//direita
@@ -806,32 +807,32 @@
 			switch(peca.tipo){
 				case 0:
 					if(tabuleiroPintado(peca.coordL[2]+1, peca.coordC[2])){
-						console.log("bateu");
+						console.log("bateu 0.0.2");
 						return true;
 					} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-						console.log("bateu");
+						console.log("bateu 0.0.3");
 						return true;
 					}
 					break;
 				case 1:
-					console.log(peca.coordL[0] + "," + peca.coordL[1] + "," + peca.coordL[2] + "," + peca.coordL[3]);
+					//console.log(peca.coordL[0] + "," + peca.coordL[1] + "," + peca.coordL[2] + "," + peca.coordL[3]);
 					if(peca.rotacao == 0){
 						if((peca.coordL[1] >=-1) && (tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])) ){
-							console.log("bateu");
+							console.log("bateu 1.0.1");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[2]+1, peca.coordC[2])){
-							console.log("bateu");
+							console.log("bateu 1.0.2");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 1.0.3");
 							return true;
 						}
 					} else {
 						if(tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])){
-							console.log("bateu");
+							console.log("bateu 1.1.1");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 1.1.3");
 							return true;
 						}
 					}
@@ -839,21 +840,21 @@
 				case 2:
 					if(peca.rotacao == 0){
 						if(tabuleiroPintado(peca.coordL[0]+1, peca.coordC[0])){
-							console.log("bateu 2.1");
+							console.log("bateu 2.0.0");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])){
-							console.log("bateu 2.2");
+							console.log("bateu 2.0.1");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[2]+1, peca.coordC[2])){
-							console.log("bateu 2.3");
+							console.log("bateu 2.0.2");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu 2.4");
+							console.log("bateu 2.0.3");
 							return true;
 						}
 					} else {
 						if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu 2");
+							console.log("bateu 2.1.3");
 							return true;
 						}
 					}
@@ -861,40 +862,40 @@
 				case 3:
 					if(peca.rotacao == 0){
 						if(tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])){
-							console.log("bateu");
+							console.log("bateu 3.0.1");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[2]+1, peca.coordC[2])){
-							console.log("bateu");
+							console.log("bateu 3.0.2");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 3.0.3");
 							return true;
 						}
 					} else if(peca.rotacao == 1){
 						if(tabuleiroPintado(peca.coordL[2]+1, peca.coordC[2])){
-							console.log("bateu");
+							console.log("bateu 3.1.2");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 3.1.3");
 							return true;
 						}
 					} else if(peca.rotacao == 2){
 						if(tabuleiroPintado(peca.coordL[0]+1, peca.coordC[0])){
-							console.log("bateu");
+							console.log("bateu 3.2.0");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[2]+1, peca.coordC[2])){
-							console.log("bateu");
+							console.log("bateu 3.2.2");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 3.2.3");
 							return true;
 						}
 					} else {
 						if(tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])){
-							console.log("bateu");
+							console.log("bateu 3.3.1");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 3.3.3");
 							return true;
 						}
 					}
@@ -902,41 +903,41 @@
 				case 4:
 					if(peca.rotacao == 0){
 						if(tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])){
-							console.log("bateu 4,1");
+							console.log("bateu 4.0.1");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[2]+1, peca.coordC[2])){
-							console.log("bateu 4,2");
+							console.log("bateu 4.0.2");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu 4,3");
+							console.log("bateu 4.0.3");
 							return true;
 						}
 					} else if(peca.rotacao == 1){
 						if(tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])){
-							console.log("bateu");
+							console.log("bateu 4.1.1");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 4.1.3");
 							return true;
 						}
 					} else if(peca.rotacao == 2){
 						if(tabuleiroPintado(peca.coordL[0]+1, peca.coordC[0])){
-							console.log("bateu");
+							console.log("bateu 4.2.0");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[1]+1, peca.coordC[1])){
-							console.log("bateu");
+							console.log("bateu 4.2.1");
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 4.2.3");
 							return true;
 						}
 					} else {
 						if(tabuleiroPintado(peca.coordL[2]+1, peca.coordC[2])){
-							console.log("bateu");
+							console.log("bateu 4.3.2");
 							criaPeca();
 							return true;
 						} else if(tabuleiroPintado(peca.coordL[3]+1, peca.coordC[3])){
-							console.log("bateu");
+							console.log("bateu 4.3.3");
 							return true;
 						}
 					}
@@ -1328,10 +1329,10 @@
 	function linhaCompleta(linha){
 		for (var j = 0; j < qtdColunas; j++){
 			if(tabuleiro[linha][j].style.backgroundColor == "white"){
-				console.log("linha: " + linha + ",coluna: " + j);
+				//console.log("linha: " + linha + ",coluna: " + j);
 				return false;
 			}
-        }
+    }
 
 		return true;
 	}
@@ -1397,8 +1398,7 @@
 				//moverPeca([peca.coordL[0]+1, peca.coordL[1]+1, peca.coordL[2]+1, peca.coordL[3]+1], peca.coordC);
 				//peca.mover(0);
 				loop();
-
-					//peca.style.left = (parseInt(peca.style.left) + 10) + "px";
+				//peca.style.left = (parseInt(peca.style.left) + 10) + "px";
 			}
 		}
 
@@ -1409,19 +1409,15 @@
 
 	function loop(){
 		if(gameOver == false){
+			//console.log(peca.tipo + ":" + peca.coordL[0] + "," + peca.coordL[1] + "," + peca.coordL[2] + "," + peca.coordL[3]);
 			if(verificaBaixoPeca()){
 				//verifica se alguma linha deve ser excluida
 				verificaSeLinhaExcluida();
 				criaPeca();
+			}else{
+					peca.mover(0);
 			}
-			//verifica se game over
-
-			peca.mover(0);
-			//console.log(peca.coordL[3]);
-
-
 		}
-
 	}
 
 	//----
