@@ -1,14 +1,14 @@
 (function(){
 	var qtdLinhas = 46;
 	var qtdColunas = 40;
-	//var FPS = 3;
-	var FPS = 5;
+	var FPS = 3;
 	var pontuacao = 0;
 	var gameOver = false;
 	var tabuleiro;
 	var peca = null;
 	var proximaPeca = null;
-	var gameLoop;
+	var gameLoop=null;
+	var incrementadorFPS = 4;
 
 	var tabela;
 	var divTabuleiro;
@@ -25,8 +25,16 @@
 
 		preencheInterfaceGrafica();
 
-	    criaPeca();
+		criaPeca();
+		resetaLoop();
+	}
+
+	function resetaLoop(){
+		if(gameLoop != null){
+			clearInterval(gameLoop);
+		}
 		gameLoop = setInterval(loop, 1000/FPS);
+		console.log("Loop resetado. Novo FPS: "+FPS);
 	}
 
 	function preencheInterfaceGrafica(){
@@ -42,7 +50,7 @@
 	        for (var j = 0; j < qtdColunas; j++){
 	            tabuleiro[i][j] = document.createElement("td");
 	            tabuleiro[i].appendChild(tabuleiro[i][j]);
-				tabuleiro[i][j].style.backgroundColor = "white";
+							tabuleiro[i][j].style.backgroundColor = "white";
 	        }
 	    }
 
@@ -62,7 +70,7 @@
 	        for (var j = 0; j < 4; j++){
 	            tabelaProximaPeca[i][j] = document.createElement("td");
 	            tabelaProximaPeca[i].appendChild(tabelaProximaPeca[i][j]);
-				tabelaProximaPeca[i][j].style.backgroundColor = "white";
+							tabelaProximaPeca[i][j].style.backgroundColor = "white";
 	        }
 	    }
 
@@ -1307,6 +1315,8 @@
 		pontuacao = pontuacao + valor;
 		if(pontuacao % 100 == 0){
 			//aumenta a velocidade
+			FPS = FPS + Math.floor(Math.random() * incrementadorFPS) + 1;
+			resetaLoop();
 		}
 
 		placar.innerHTML = pontuacao;
@@ -1358,6 +1368,7 @@
 				apontaLinha = apontaLinha - 1;
 			}else{
 				incrementaPontuacao(100);
+				FPS = FPS + Math.floor(Math.random() * incrementadorFPS) + 1;
 				console.log("linha completa: " + linha);
 			}
 		}
@@ -1368,6 +1379,7 @@
 				apontaLinha = apontaLinha - 1;
 				linha = linha - 1;
 			}
+			resetaLoop();
 			return true;
 		}else{
 			return false;
