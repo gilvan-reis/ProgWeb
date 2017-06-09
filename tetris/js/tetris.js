@@ -108,7 +108,9 @@ var jogo = (function(){
 										<label>&#x2192: move a peça para a direita</label><br>\
 										<label>&#x2191: rotaciona a peça</label><br>\
 										<label>&#x2193: faz a peça descer</label><br>\
-										<label>ESPACO: inicia um novo jogo</label><br>";
+										<label>ESPACO: inicia um novo jogo</label><br>\
+										<br><b>Autor</b><br>\
+										<label>Gilvan Oliveira dos Reis</label>";
 		placar = document.querySelector("#placar");
 	}
 
