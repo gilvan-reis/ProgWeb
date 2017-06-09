@@ -1,9 +1,9 @@
-(function(){
+var jogo = (function(){
 	var qtdLinhas = 46;
 	var qtdColunas = 40;
 	var FPS = 3;
-	var pontuacao = 0;
 	var gameOver = false;
+	var pontuacao;
 	var tabuleiro;
 	var peca = null;
 	var proximaPeca = null;
@@ -17,11 +17,36 @@
 	var placar;
 	var tabelaProximaPeca;
 
+	/* closure */
+	function Pontuacao(){
+		var pontuacaoPrivada = 0;
+		this.getPontuacao = function(){
+			return pontuacaoPrivada;
+		}
+		this.setPontuacao = function(val){
+			pontuacaoPrivada = val;
+			placar.innerHTML = pontuacaoPrivada;
+		}
+		this.incrementaPontuacao = function(val){
+			pontuacaoPrivada = pontuacaoPrivada + val;
+
+			if(pontuacaoPrivada % 100 == 0){
+				//aumenta a velocidade
+				FPS = FPS + Math.floor(Math.random() * incrementadorFPS) + 1;
+				resetaLoop();
+			}
+
+			placar.innerHTML = pontuacaoPrivada;
+		}
+	}
+
 	//----
 	function inicia(){
 		divTabuleiro = document.querySelector("#tabuleiro");
 		divProximaPeca = document.querySelector("#proximaPeca");
 		divInformacoes = document.querySelector("#informacoes");
+
+		pontuacao =  new Pontuacao();
 
 		preencheInterfaceGrafica();
 
@@ -90,7 +115,7 @@
 	function reinicia(){
 		peca = null;
 		proximaPeca = null;
-		pontuacao = 0;
+		pontuacao.setPontuacao(0);
 		gameOver = false;
 
 		//repintar tabela
@@ -125,7 +150,7 @@
 		}else{
 			peca = proximaPeca;
 			proximaPeca = novaPeca();
-			incrementaPontuacao(10);
+			pontuacao.incrementaPontuacao(10);
 		}
 
 		imprimeProximaPeca();
@@ -139,7 +164,6 @@
 		}else{
 			//peca.mover(0);
 		}
-		//clearInterval(gameLoop); //para totalmente o loop
 	}
 
 	function novaPeca(){
@@ -1311,17 +1335,6 @@
 		}
 	}
 
-	function incrementaPontuacao(valor){
-		pontuacao = pontuacao + valor;
-		if(pontuacao % 100 == 0){
-			//aumenta a velocidade
-			FPS = FPS + Math.floor(Math.random() * incrementadorFPS) + 1;
-			resetaLoop();
-		}
-
-		placar.innerHTML = pontuacao;
-	}
-
 	function tabuleiroPintado(coordL, coordC){
 		if(coordC >= qtdColunas){
 			return true;
@@ -1367,7 +1380,7 @@
 				}
 				apontaLinha = apontaLinha - 1;
 			}else{
-				incrementaPontuacao(100);
+				pontuacao.incrementaPontuacao(100);
 				FPS = FPS + Math.floor(Math.random() * incrementadorFPS) + 1;
 				console.log("linha completa: " + linha);
 			}
@@ -1427,7 +1440,7 @@
 				verificaSeLinhaExcluida();
 				criaPeca();
 			}else{
-					peca.mover(0);
+				peca.mover(0);
 			}
 		}
 	}
