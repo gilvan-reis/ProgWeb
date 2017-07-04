@@ -138,7 +138,9 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        return $this->render('about');
+        $descricao = 'Esta é uma descricao da aplicacao';
+        $dataAtual = date('Y-m-d H:i:s');
+        return $this->render('about',['descricao' => $descricao, 'dataAtual' => $dataAtual]);
     }
 
     /**
