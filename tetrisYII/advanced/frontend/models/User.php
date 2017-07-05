@@ -55,15 +55,15 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
+            'username' => 'Nome de Usuário',
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
             'password_reset_token' => 'Password Reset Token',
-            'email' => 'Email do usuario',
+            'email' => 'Email',
             'status' => 'Status',
-            'created_at' => 'Created At',
+            'created_at' => 'Adicionado em',
             'updated_at' => 'Updated At',
-            'id_curso' => 'Id do Curso do Usuario',
+            'id_curso' => 'Curso',
         ];
     }
 
@@ -81,5 +81,13 @@ class User extends \yii\db\ActiveRecord
     public function getIdCurso()
     {
         return $this->hasOne(Curso::className(), ['id' => 'id_curso']);
+    }
+
+    public function afterFind(){
+	parent::afterFind();
+
+	$this->username = ucwords($this->username);
+	$this->created_at = date("d/m/Y H:i:s", $this->created_at);
+	$this->id_curso = Curso::findOne($this->id_curso)->nome;
     }
 }

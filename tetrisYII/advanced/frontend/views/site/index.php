@@ -1,17 +1,19 @@
 <?php
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'TetrisYII';
 ?>
+
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <?= Html::img('@web/img/tetris.jpg',['width'=>'400']) ?>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <p class="lead">Este tetris foi criado pelo Gilvan Oliveira dos Reis</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <p><a class="btn btn-lg btn-success" href="">Iniciar Jogo!</a></p>
     </div>
 
     <div class="body-content">
