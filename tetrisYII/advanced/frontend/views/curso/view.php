@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Curso */
@@ -19,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Você deseja deletar este curso?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -31,6 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             'sigla',
             'descricao:ntext',
+	    [
+		'attribute' => 'Quantidade de alunos',
+		'format' => 'raw',
+		'value' => function($model){
+				return User::find()->where('id_curso='.$model->id)->count();
+			},
+		]
         ],
     ]) ?>
 

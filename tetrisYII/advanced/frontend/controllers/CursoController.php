@@ -49,8 +49,13 @@ class CursoController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id=0)
     {
+	if($id == 0){
+		$id = Curso::findOne(['sigla' => 'aa'])->id;
+		//$id = Curso::findOne(['sigla' => 'icc'])->id; //colocar codigo de cc apos alterar o banco
+	}
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
