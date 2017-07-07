@@ -8,6 +8,11 @@ use yii\web\Controller;
 
 class JogadaController extends Controller{
 	public function actionPlay(){
+		if (Yii::$app->user->isGuest) {
+			//return $this->render('login', []);
+		}else{
+			//return $this->render('play', []);
+		}
 		return $this->render('play', []);
 	}
 
@@ -17,9 +22,9 @@ class JogadaController extends Controller{
 	public function actionSave(){
 		if (!Yii::$app->user->isGuest) {
 			$pontuacao = Yii::$app->request->post('pontuacao');
-			$user = Yii::$app->user->identity->id;
-			$jogada = new Jogada;
-			$jogada->id_user = $user;
+			$id_user = Yii::$app->user->identity->id;
+			$jogada = new Jogada();
+			$jogada->id_user = $id_user;
 			$jogada->pontuacao = $pontuacao;
 		}
 		if ($jogada->save()) {

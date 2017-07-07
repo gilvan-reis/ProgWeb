@@ -3,12 +3,13 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\BootstrapAsset;
 
 $this->title = 'TetrisYII';
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCssFile('/css/estilosTetris.css',['depends' => BootstrapAsset::className()]);
-$this->registerJsFile('/assets/tetris/tetris.js',['position' => $this::POS_END]);
+$this->registerJsFile('/js/tetris.js');
 
 ?>
 <div class="jogada-play">
@@ -16,4 +17,25 @@ $this->registerJsFile('/assets/tetris/tetris.js',['position' => $this::POS_END])
     <div id="proximaPeca" class="divTetris"></div>
     <div id="tabuleiro" class="divTetris"></div>
     <div id="informacoes" class="divTetris"></div>
+
+    <?php
+        $this->registerJs("
+                    document.addEventListener('GameOver',
+                        function(e){
+                            console.log(e);
+                            console.log(e.detail);
+                            pontuacao1 = parseInt(e.detail);
+                            console.log(pontuacao1);
+                            $.ajax({
+                                type: 'POST',
+                                url: '". Url::to(['jogada/save']) ."',
+                                data: {
+                                    pontuacao: pontuacao1
+                                },
+                                success: function(data) {
+                                    console.log(data);
+                            }
+                        });
+                    });");
+    ?>
 </div>
