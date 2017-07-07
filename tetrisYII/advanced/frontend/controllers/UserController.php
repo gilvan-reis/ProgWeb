@@ -65,7 +65,7 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-	$arraycursos = Curso::find()->select(['nome'])->indexBy('id')->column();
+        $arraycursos = Curso::find()->select(['nome'])->indexBy('id')->column();
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -73,7 +73,7 @@ class UserController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-		'arraycursos' => $arraycursos,
+                'arraycursos' => $arraycursos,
             ]);
         }
     }
@@ -87,12 +87,14 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $arraycursos = Curso::find()->select(['nome'])->indexBy('id')->column();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'arraycursos' => $arraycursos,
             ]);
         }
     }

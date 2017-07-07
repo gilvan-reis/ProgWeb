@@ -37,7 +37,7 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required', 'message'=>'Este campo é obrigatorio'],
+            [['username', 'auth_key', 'password_hash', 'email'], 'required', 'message'=>'Este campo é obrigatorio'],
             [['status', 'created_at', 'updated_at', 'id_curso'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
@@ -84,10 +84,23 @@ class User extends \yii\db\ActiveRecord
     }
 
     public function afterFind(){
-	parent::afterFind();
+      parent::afterFind();
 
-	$this->username = ucwords($this->username);
-	$this->created_at = date("d/m/Y H:i:s", $this->created_at);
-	$this->id_curso = Curso::findOne($this->id_curso)->nome;
+      $this->username = ucwords($this->username);
+      $this->created_at = date("d/m/Y H:i:s", $this->created_at);
+      $this->id_curso = Curso::findOne($this->id_curso)->nome;
+    }
+
+    public function beforeSave($insert){
+      if(parent::beforeSave($insert)){
+        $time = time();
+        $this->updated_at = $time;
+        if($this->isNewRecord){
+          $this->created_at = $time;
+          $this->status = 10;
+        }
+        return true;
+      }
+      return false;
     }
 }

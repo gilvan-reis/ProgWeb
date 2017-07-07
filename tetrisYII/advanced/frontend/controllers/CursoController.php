@@ -125,4 +125,10 @@ class CursoController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionUsers($id_curso, $view){
+	    //testar
+      $curso = Curso::find()->with('user')->where(['id' => $id_curso])->all();
+      $alunos = $curso->user;
+    }
 }

@@ -18,8 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'created_at')->textInput(['maxlength' => true]) ?>
-<?= $form->field($model, 'updated_at')->textInput(['maxlength' => true]) ?>
+
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 

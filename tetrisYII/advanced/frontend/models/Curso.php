@@ -59,12 +59,12 @@ class Curso extends \yii\db\ActiveRecord
         return $this->hasMany(User::className(), ['id_curso' => 'id']);
     }
 
-   public function getLoggedUserCurso(){
-	$user = Yii::$app->user->identity;
-	if(!isset($user)){
-		return 0;
-	}else{
-		return $user->id_curso;
-	}
-   }
+    public function getLoggedUserCurso(){
+      $user = Yii::$app->user->identity;
+      if(!isset($user)){
+        return 0;
+      }else{
+        return $user->id_curso;
+      }
+    }
 }

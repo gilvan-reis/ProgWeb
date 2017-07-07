@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\bootstrap\BootstrapAsset;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -9,6 +10,7 @@ use yii\widgets\DetailView;
 $this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile('/css/view.css',['depends' => BootstrapAsset::className()]);
 ?>
 <div class="user-view">
 

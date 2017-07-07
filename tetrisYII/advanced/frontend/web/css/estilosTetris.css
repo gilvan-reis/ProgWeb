@@ -1,0 +1,25 @@
+#tabuleiro {
+  width: 400px;
+  height: 648px;
+  border-width: 3px;
+}
+.divTetris{
+    float:left;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+}
+
+td{
+  width: 10px;
+  height: 10px;
+  margin: 10px;
+  background-color: white;
+}
+
+body{
+  overflow: hidden;
+}
