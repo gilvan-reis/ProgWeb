@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use app\models\Curso;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -64,12 +65,15 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
+	$arraycursos = Curso::find()->select(['nome'])->indexBy('id')->column();
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+		'arraycursos' => $arraycursos,
             ]);
         }
     }
