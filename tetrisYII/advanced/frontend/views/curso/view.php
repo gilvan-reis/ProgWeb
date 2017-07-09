@@ -26,6 +26,7 @@ $this->registerCssFile('/css/view.css',['depends' => BootstrapAsset::className()
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Listar usuarios', ['users', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= DetailView::widget([

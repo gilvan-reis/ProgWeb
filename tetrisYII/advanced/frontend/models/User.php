@@ -7,6 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use \Datetime;
 
 /**
  * This is the model class for table "user".
@@ -29,6 +30,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+
+    public $nome_pre_formatado = "1";
     /**
      * @inheritdoc
      */
@@ -85,7 +88,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdCurso()
+    public function getCurso()
     {
         return $this->hasOne(Curso::className(), ['id' => 'id_curso']);
     }
@@ -93,23 +96,41 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function afterFind(){
       parent::afterFind();
 
+      $this->nome_pre_formatado = $this->username;
       $this->username = ucwords($this->username);
       $this->created_at = date("d/m/Y H:i:s", $this->created_at);
       $this->id_curso = Curso::findOne($this->id_curso)->nome;
     }
 
-    public function beforeSave($insert){
-      if(parent::beforeSave($insert)){
-        $time = time();
-        $this->updated_at = $time;
-        if($this->isNewRecord){
-          $this->created_at = $time;
-          $this->status = User::STATUS_ACTIVE;
-          User::generateAuthKey();
+    public function beforeValidate(){
+        $dtime = DateTime::createFromFormat("d/m/Y H:i:s", $this->created_at);
+        if ($dtime instanceof DateTime){
+            $this->created_at = $dtime->getTimestamp();
+            return true;
         }
-        return true;
-      }
-      return false;
+
+        return false;
+    }
+
+    public function beforeSave($insert){
+        if(parent::beforeSave($insert)){
+            $time = time();
+            $this->updated_at = $time;
+            if($this->isNewRecord){
+                $this->created_at = $time;
+                $this->status = User::STATUS_ACTIVE;
+                User::generateAuthKey();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function afterSave($insert, $changedAttributes){
+        $this->nome_pre_formatado = $this->username;
+        $this->username = ucwords($this->username);
+        //$this->created_at = date("d/m/Y H:i:s", $this->created_at);
+        //$this->id_curso = Curso::findOne($this->id_curso)->nome;
     }
 
     /**

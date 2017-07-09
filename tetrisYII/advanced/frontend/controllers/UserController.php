@@ -90,8 +90,14 @@ class UserController extends Controller
         $arraycursos = Curso::find()->select(['nome'])->indexBy('id')->column();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //print_r ($model->getErrors());
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            //print_r ($model->getErrors());
+            //print_r ($model);
+            //print("nome:".$model->nome_pre_formatado);
+            //echo "<script>alert('aa')</script>";
+            $model->username = $model->nome_pre_formatado;
             return $this->render('update', [
                 'model' => $model,
                 'arraycursos' => $arraycursos,

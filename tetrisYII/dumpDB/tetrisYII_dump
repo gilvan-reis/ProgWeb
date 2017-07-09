@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `curso`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `curso` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   `sigla` char(4) DEFAULT NULL,
   `descricao` mediumtext,
@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `jogada`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `jogada` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` int(11) DEFAULT NULL,
   `pontuacao` int(11) DEFAULT NULL,
   `data_hora` varchar(45) DEFAULT NULL,
