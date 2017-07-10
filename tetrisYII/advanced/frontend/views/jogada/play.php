@@ -22,8 +22,6 @@ $this->registerJsFile('/js/tetris.js');
         $this->registerJs("
                     document.addEventListener('GameOver',
                         function(e){
-                            console.log(e);
-                            console.log(e.detail);
                             pontuacao1 = parseInt(e.detail);
                             console.log(pontuacao1);
                             $.ajax({

@@ -30,7 +30,6 @@ class Jogada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required', 'message'=>'Este campo é obrigatorio'],
             [['id', 'id_user', 'pontuacao'], 'integer'],
             [['data_hora'], 'string', 'max' => 45],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
@@ -56,5 +55,9 @@ class Jogada extends \yii\db\ActiveRecord
     public function getIdUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
+
+    public function beforeSave($insert){
+      $this->data_hora = date("d/m/Y H:i:s", time());
     }
 }

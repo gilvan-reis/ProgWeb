@@ -5,11 +5,12 @@ namespace frontend\controllers;
 use Yii;
 use app\models\Jogada;
 use yii\web\Controller;
+use frontend\controllers\SiteController;
 
 class JogadaController extends Controller{
 	public function actionPlay(){
 		if (Yii::$app->user->isGuest) {
-			//return $this->render('login', []);
+			//return SiteController::actionLogin();
 		}else{
 			//return $this->render('play', []);
 		}
@@ -27,10 +28,13 @@ class JogadaController extends Controller{
 			$jogada->id_user = $id_user;
 			$jogada->pontuacao = $pontuacao;
 		}
+
 		if ($jogada->save()) {
+			//return "Jogada do usuario \"".$id_user."\" com pontuacao de ".$jogada->pontuacao." salva com sucesso!";
 			return 1;
 		} else {
-			return 0;
+			return var_dump($jogada->getErrors());
+			//return var_dump($jogada);
 		}
 	}
 }

@@ -31,7 +31,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
-    public $nome_pre_formatado = "1";
+    public $nome_pre_formatado = "";
     /**
      * @inheritdoc
      */
@@ -103,6 +103,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     public function beforeValidate(){
+      if(!$this->isNewRecord){
         $dtime = DateTime::createFromFormat("d/m/Y H:i:s", $this->created_at);
         if ($dtime instanceof DateTime){
             $this->created_at = $dtime->getTimestamp();
@@ -110,6 +111,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         }
 
         return false;
+      }
+      return true;
     }
 
     public function beforeSave($insert){

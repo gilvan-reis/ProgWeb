@@ -119,6 +119,7 @@ var jogo = (function(){
 		proximaPeca = null;
 		pontuacao.setPontuacao(0);
 		gameOver = false;
+		FPS = 3;
 
 		//repintar tabela
 		for (var i = 0; i < qtdLinhas; i++){
