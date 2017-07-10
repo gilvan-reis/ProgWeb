@@ -11,7 +11,7 @@ use app\models\User;
 $this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Cursos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerCssFile('/css/view.css',['depends' => BootstrapAsset::className()]);
+$this->registerCssFile('@web/css/view.css',['depends' => BootstrapAsset::className()]);
 ?>
 <div class="curso-view">
 

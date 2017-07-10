@@ -8,8 +8,8 @@ use yii\bootstrap\BootstrapAsset;
 
 $this->title = 'TetrisYII';
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerCssFile('/css/estilosTetris.css',['depends' => BootstrapAsset::className()]);
-$this->registerJsFile('/js/tetris.js');
+$this->registerCssFile('@web/css/estilosTetris.css',['depends' => BootstrapAsset::className()]);
+$this->registerJsFile('@web/js/tetris.js');
 
 ?>
 <div class="jogada-play">

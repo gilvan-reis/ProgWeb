@@ -58,6 +58,10 @@ class Jogada extends \yii\db\ActiveRecord
     }
 
     public function beforeSave($insert){
-      $this->data_hora = date("d/m/Y H:i:s", time());
+      if(parent::beforeSave($insert)){
+        $this->data_hora = date("d/m/Y H:i:s", time());
+        return true;
+      }
+      return false;
     }
 }

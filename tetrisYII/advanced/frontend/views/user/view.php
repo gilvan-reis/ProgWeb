@@ -10,7 +10,7 @@ use yii\bootstrap\BootstrapAsset;
 $this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$this->registerCssFile('/css/view.css',['depends' => BootstrapAsset::className()]);
+$this->registerCssFile('@web/css/view.css',['depends' => BootstrapAsset::className()]);
 ?>
 <div class="user-view">
 

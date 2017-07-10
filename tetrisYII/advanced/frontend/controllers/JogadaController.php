@@ -10,11 +10,10 @@ use frontend\controllers\SiteController;
 class JogadaController extends Controller{
 	public function actionPlay(){
 		if (Yii::$app->user->isGuest) {
-			//return SiteController::actionLogin();
+			$this->redirect(['site/login']);
 		}else{
-			//return $this->render('play', []);
+			return $this->render('play', []);
 		}
-		return $this->render('play', []);
 	}
 
 	public function actionRanking(){
@@ -27,14 +26,16 @@ class JogadaController extends Controller{
 			$jogada = new Jogada();
 			$jogada->id_user = $id_user;
 			$jogada->pontuacao = $pontuacao;
+
+			if ($jogada->save()) {
+				return "Jogada do usuario \"".$id_user."\" com pontuacao de ".$jogada->pontuacao." salva com sucesso!";
+				//return 1;
+			} else {
+				return var_dump($jogada->getErrors());
+				//return var_dump($jogada);
+			}
 		}
 
-		if ($jogada->save()) {
-			//return "Jogada do usuario \"".$id_user."\" com pontuacao de ".$jogada->pontuacao." salva com sucesso!";
-			return 1;
-		} else {
-			return var_dump($jogada->getErrors());
-			//return var_dump($jogada);
-		}
+
 	}
 }
