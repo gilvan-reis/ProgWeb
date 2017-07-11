@@ -16,7 +16,10 @@ $this->registerJsFile('@web/js/tetris.js');
     <h1><?= Html::encode($this->title) ?></h1>
     <div id="proximaPeca" class="divTetris"></div>
     <div id="tabuleiro" class="divTetris"></div>
-    <div id="informacoes" class="divTetris"></div>
+    <div id="informacoes" class="divTetris">
+
+    </div>
+    <?= Html::a('Ranking', ['ranking'], ['class' => 'btn btn-success']) ?>
 
     <?php
         $this->registerJs("

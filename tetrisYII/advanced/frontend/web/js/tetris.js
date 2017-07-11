@@ -8,7 +8,7 @@ var jogo = (function(){
 	var peca = null;
 	var proximaPeca = null;
 	var gameLoop=null;
-	var incrementadorFPS = 4;
+	var incrementadorFPS = 3;
 
 	var tabela;
 	var divTabuleiro;

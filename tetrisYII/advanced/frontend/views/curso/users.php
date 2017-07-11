@@ -7,9 +7,9 @@ use yii\grid\GridView;
 
 /* @var $model app\models\Curso */
 
-$this->title = "Listar usuarios do curso: ". $curso->nome;
+$this->title = "Listar usuarios";
 $this->params['breadcrumbs'][] = ['label' => 'Curso', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $curso->id, 'url' => ['view', 'id' => $curso->id]];
+$this->params['breadcrumbs'][] = ['label' => $curso->nome, 'url' => ['view', 'id' => $curso->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="curso-users">
@@ -20,6 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
     'dataProvider' => $dataProvider,
     'columns' => [
         'username',
+        'email',
+        'created_at'
         ],
     'emptyText' => 'Sem usuarios registrados no curso',
     ]); ?>

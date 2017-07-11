@@ -6,6 +6,8 @@ use Yii;
 use app\models\Jogada;
 use yii\web\Controller;
 use frontend\controllers\SiteController;
+use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 
 class JogadaController extends Controller{
 	public function actionPlay(){
@@ -17,6 +19,17 @@ class JogadaController extends Controller{
 	}
 
 	public function actionRanking(){
+		$array = Jogada::find()
+				->with('user')
+				->orderBy(['pontuacao'=>SORT_DESC])
+				->limit(3)
+				->offset(0)->all();
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $array,
+        ]);
+        return $this->render('ranking', [
+            'dataProvider' => $dataProvider,
+        ]);
 	}
 
 	public function actionSave(){
